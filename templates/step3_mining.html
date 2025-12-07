@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="text-center mb-4">Step 3: Data Mining</h2>
+<div class="concept-box mb-5 shadow-sm">
+    <strong>🎓 Key Concept: Algorithms & Pattern Recognition</strong><br>
+    We will now train a <strong>Logistic Regression</strong> model. Think of this as teaching the computer: "Look at these features (duration, popularity) and tell me if the song is a HIT."
+</div>
+<form method="post">
+    <div class="row g-4">
+        <div class="col-md-5">
+            <div class="card step-card p-4 h-100 border-0 shadow">
+                <h4 class="text-primary mb-3">1. Define "Success"</h4>
+                <p class="text-muted">We need to draw a line. Any song with popularity above this number is a "HIT".</p>
+                <label class="form-label mt-3 fw-bold">Popularity Threshold (0-100)</label>
+                <div class="d-flex align-items-center">
+                    <input type="range" class="form-range flex-grow-1 me-3" min="50" max="90" value="75" name="threshold" oninput="this.nextElementSibling.value = this.value">
+                    <output class="fw-bold h4 text-primary m-0">75</output>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card step-card p-4 h-100 border-0 shadow">
+                <h4 class="text-danger mb-3">2. Choose Predictors</h4>
+                <p class="text-muted">What data should the AI look at to make its decision?</p>
+                <div class="row">
+                    {% for col in columns %}
+                    <div class="col-md-6 mb-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="features" value="{{ col }}" id="{{ col }}" 
+                            {% if col in ['artist_popularity', 'track_duration_min'] %}checked{% endif %}>
+                            <label class="form-check-label" for="{{ col }}">{{ col }}</label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-5">
+        <button type="submit" class="btn btn-danger btn-lg px-5 rounded-pill shadow-lg">
+            🚀 Train AI Model
+        </button>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-4">Mission Report</h1>
+    <p class="lead text-muted">The AI has finished analyzing the patterns. Here is what we found.</p>
+</div>
+
+<div class="row justify-content-center mb-5">
+    <div class="col-md-8">
+        <div class="card shadow border-0">
+            <div class="card-body text-center p-4">
+                <h5 class="text-muted text-uppercase letter-spacing">Model Performance Grade</h5>
+                {% set f1_score = f1|float %}
+                {% if f1_score > 0.8 %}
+                    <h1 class="display-1 text-success fw-bold">Excellent 🌟</h1>
+                    <p>Your AI is highly effective at predicting hits!</p>
+                {% elif f1_score > 0.6 %}
+                    <h1 class="display-1 text-warning fw-bold">Good ⚠️</h1>
+                    <p>The AI is helpful, but misses some nuances. Try adding more features.</p>
+                {% else %}
+                    <h1 class="display-1 text-danger fw-bold">Poor ❌</h1>
+                    <p>The AI is confused. Your chosen features might not be strong enough predictors.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12"><h3 class="border-bottom pb-2 mb-4">Detailed Metrics</h3></div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body text-center">
+                <div class="display-4 mb-2 text-primary">{{ acc }}</div>
+                <h6 class="text-uppercase text-muted">Accuracy</h6>
+                <p class="small">"How often is the AI correct overall?"</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body text-center">
+                <div class="display-4 mb-2 text-success">{{ prec }}</div>
+                <h6 class="text-uppercase text-muted">Precision</h6>
+                <p class="small">"When it says 'HIT', can we trust it?"</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body text-center">
+                <div class="display-4 mb-2 text-info">{{ rec }}</div>
+                <h6 class="text-uppercase text-muted">Recall</h6>
+                <p class="small">"Did it find all the hits, or miss some?"</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 border-0 shadow-sm hover-card">
+            <div class="card-body text-center">
+                <div class="display-4 mb-2 text-dark">{{ f1 }}</div>
+                <h6 class="text-uppercase text-muted">F1 Score</h6>
+                <p class="small">The balanced score. (Precision + Recall mixed)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12"><h3 class="border-bottom pb-2 mb-4">Visual Analysis</h3></div>
+    <div class="col-md-7 mb-4">
+        <div class="card shadow border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5>What makes a song a "Hit"? (Feature Importance)</h5>
+                <p class="text-muted small">Bars to the right increase popularity. Bars to the left hurt it.</p>
+            </div>
+            <div class="card-body">
+                <div id="feat-graph" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 mb-4">
+        <div class="card shadow border-0 h-100">
+            <div class="card-header bg-white border-0 pt-4 px-4">
+                <h5>Where did it get confused?</h5>
+                <p class="text-muted small">Darker squares mean more songs in that category.</p>
+            </div>
+            <div class="card-body">
+                <div id="cm-graph" style="height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center py-5">
+    <a href="/" class="btn btn-outline-dark btn-lg rounded-pill px-5">🔄 Start New Mission</a>
+</div>
+
+<script>
+    var cm_config = {{ cm_json | safe }};
+    var feat_config = {{ feat_json | safe }};
+    
+    // Make charts responsive
+    cm_config.layout.autosize = true;
+    feat_config.layout.autosize = true;
+    feat_config.layout.margin = {l: 150, r: 20, t: 30, b: 30};
+
+    Plotly.newPlot('cm-graph', cm_config.data, cm_config.layout, {responsive: true});
+    Plotly.newPlot('feat-graph', feat_config.data, feat_config.layout, {responsive: true});
+</script>
+{% endblock %}

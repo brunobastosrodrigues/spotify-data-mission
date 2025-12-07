@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="hero-section text-center">
+    <h1 class="display-4 fw-bold">Data Science Mission Control</h1>
+    <p class="lead">Unlock the secrets of the music industry using data.</p>
+</div>
+<div class="row text-center mb-5">
+    <div class="col-md-8 mx-auto">
+        <h3 class="mb-3">Your Objective</h3>
+        <p class="text-muted lead">You are a Data Analyst for a major record label. Your goal: <strong>Build an AI model to predict which songs will become Global Hits.</strong></p>
+    </div>
+</div>
+<div class="row g-4">
+    <div class="col-md-3">
+        <div class="card step-card h-100 p-4 text-center border-0 bg-white">
+            <div class="display-4 text-primary mb-3">📥</div>
+            <h5>1. Collection</h5>
+            <p class="small text-muted">Ingest raw data from the real world.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card step-card h-100 p-4 text-center border-0 bg-white">
+            <div class="display-4 text-warning mb-3">🧹</div>
+            <h5>2. Preparation</h5>
+            <p class="small text-muted">Clean "dirty" data and fill in missing gaps.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card step-card h-100 p-4 text-center border-0 bg-white">
+            <div class="display-4 text-danger mb-3">⛏️</div>
+            <h5>3. Mining</h5>
+            <p class="small text-muted">Train an algorithm to find hidden patterns.</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card step-card h-100 p-4 text-center border-0 bg-white">
+            <div class="display-4 text-success mb-3">📊</div>
+            <h5>4. Insights</h5>
+            <p class="small text-muted">Evaluate the model's success rate.</p>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-5">
+    <a href="/step1" class="btn btn-primary btn-lg rounded-pill px-5 shadow-lg">🚀 Launch Mission</a>
+</div>
+{% endblock %}
